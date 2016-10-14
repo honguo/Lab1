@@ -6,7 +6,9 @@ import java.util.*;
 //import java.util.stream.Sink.ChainedReference;
 
 import javax.print.attribute.standard.PrinterMessageFromOperator;
-//this is from b2
+
+// third combinatioin
+>>>>>>> B1
 public class exp {//
 	public static void main(String[] args) {
 		System.out.print("print your expression:");
