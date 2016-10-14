@@ -1,6 +1,5 @@
 package expression;
 
-
 import java.lang.management.OperatingSystemMXBean;
 import java.sql.Time;
 import java.util.*;
@@ -8,7 +7,7 @@ import java.util.*;
 
 import javax.print.attribute.standard.PrinterMessageFromOperator;
 
-public class exp {//数字与变量之间必须有op
+public class exp {//
 	public static void main(String[] args) {
 		System.out.print("print your expression:");
 		Scanner in=new Scanner(System.in);
@@ -34,7 +33,7 @@ public class exp {//数字与变量之间必须有op
 	}
 	
 }
-class expression{//生成后缀表达式
+class expression{//
 	private String input;
 	public Stack<String> value=new Stack<>();
 	private Stack<String> op=new Stack<>();
@@ -45,7 +44,7 @@ class expression{//生成后缀表达式
 	public expression(String input){
 		this.input=input.substring(0);
 	}
-	public Stack<String> retExp(){//返回后缀表达式
+	public Stack<String> retExp(){//
 		String top,now;
 		int i,j=0;
 		for(i=0;i<input.length();i++){
@@ -76,7 +75,7 @@ class expression{//生成后缀表达式
 		}
 		return value;
 	}
-	public TYPE retVar(String inputVars){//以字符串形式先后存储变量
+	public TYPE retVar(String inputVars){//
 		String[] varTemp=inputVars.split(" ");
 		int i;
 		String[] temp;
@@ -120,7 +119,7 @@ class expression{//生成后缀表达式
 			return TYPE.OTHER;
 		}
 	}
-	public String derivetive(){//求导,针对顺序的表达式如[1,+,x,*,y]找到变量（而且是连乘的最后一个）将前后的相乘的拼接起来
+	public String derivetive(){//
 		int i,j,k,index,count;
 		int len,len2;
 		String temp="";
@@ -131,10 +130,10 @@ class expression{//生成后缀表达式
 			if(origin.get(i).equals(var)){
 				index=i;
 				count=1;
-				len=0;//向前拼接的长度
-				len2=0;//向后
+				len=0;//
+				len2=0;//
 				/*********/
-				for(j=i+1;j<size;j++){//找到最后的变量var
+				for(j=i+1;j<size;j++){//
 					if(origin.get(j).equals(var)){
 						index=j;
 						count++;
@@ -142,14 +141,14 @@ class expression{//生成后缀表达式
 					else if(origin.get(j).equals("+") || origin.get(j).equals("-")) break;
 				}
 				i=index;
-				for(j=i-1;j>=0;j--){//找到前面的+,-
-					if(origin.get(j).equals("+")){//如果是最前面的话不包含+
+				for(j=i-1;j>=0;j--){//
+					if(origin.get(j).equals("+")){//
 						if(count2==0) j=j+1;
 						break;
 					}
 					else if(origin.get(j).equals("-")) break;
 				}
-				for(k=(j<0?0:j);k<i-1;k++){//不包含最后的op,以及前面的+,-
+				for(k=(j<0?0:j);k<i-1;k++){//
 					if(!origin.get(k).equals("+") && !origin.get(k).equals("-")) len++;
 					temp+=origin.get(k);
 				}
@@ -157,7 +156,7 @@ class expression{//生成后缀表达式
 					temp+=origin.get(i-1);
 				}
 				/***********/
-				for(j=i+1;j<size;j++){//后面的子串
+				for(j=i+1;j<size;j++){//
 					if(origin.get(j).equals("+") || origin.get(j).equals("-")) break;
 				}
 				if(count>1) temp+=("*"+count);
@@ -167,7 +166,7 @@ class expression{//生成后缀表达式
 				if(len2<1 && len<1) {
 					temp+=1;
 				}
-				for(k=(len>0?i+1:i+2);k<j && k<size;k++){//不包含后面的op(即+-)
+				for(k=(len>0?i+1:i+2);k<j && k<size;k++){//
 					temp+=origin.get(k);
 				}
 			count2++;
@@ -177,11 +176,11 @@ class expression{//生成后缀表达式
 		if(flag==0) return "0";
 		return temp.substring(0);
 	}
-	public String simplify(){//求值
+	public String simplify(){//
 		 int i,j;
 		 String temp1,temp2;
 		 Stack<String> temp=new Stack<>();
-		 for(i=0;i<varLen;i++){//把所有的变量用相应的数替代
+		 for(i=0;i<varLen;i++){//
 			 for(j=0;j<value.size();j++){
 				 if(value.get(j).equals(vars[2*i])){
 					 value.set(j, vars[2*i+1]);
@@ -245,7 +244,7 @@ class expression{//生成后缀表达式
 		 }
 		 return temp.peek();
 	}
-	private int isLegal(char ch){//0,1,2,3分别代表数字，字母，op以及非法输入
+	private int isLegal(char ch){//
 		int temp=(int)ch;
 		if(temp>=48 && temp<=57) return 0;
 		else if((temp>=65 && temp<=90)||(temp>=97 && temp<=122)) return 1;
