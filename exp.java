@@ -57,6 +57,8 @@ class expression{//生成后缀表达式
 		int i,j=0;
 		for(i=0;i<input.length();i++){
 			if(isLegal(input.charAt(i))==3){
+                System.out.println("input is illegal");
+                System.out.println("input is illegal");
 				System.out.println("input is illegal");
 				System.exit(0);
 			}
