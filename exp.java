@@ -23,6 +23,7 @@ public class exp {
 		expression temp1=new expression(exp);
 		temp1.retExp();
 		//System.out.println(temp1.value);
+		System.out.println(temp1.value);
 		System.out.println("input vars:");
 		String inputValue=in.nextLine();
 		TYPE type=temp1.retVar(inputValue);
@@ -38,7 +39,7 @@ public class exp {
 		long endTime=System.currentTimeMillis();
 		System.out.println("time lasts: "+(endTime-currentTime)+"ms");
 	}
-	
+
 }
 class expression{//生成后缀表达式
 	private String input;
@@ -69,7 +70,7 @@ class expression{//生成后缀表达式
 					while(retPriority(now)<=retPriority(top) && !op.empty()){
 						value.push(op.pop());
 						if(!op.empty()) top=op.peek();
-					}	
+					}
 				}
 				op.push(now);
 				j=i+1;
@@ -247,7 +248,7 @@ class expression{//生成后缀表达式
 				break;
 			default:
 				temp.push(value.get(i));
-			} 
+			}
 		 }
 		 return temp.peek();
 	}
