@@ -99,6 +99,7 @@ class expression{//生成后缀表达式
 					}
 					else{
 						System.out.println("invalid input");
+						System.out.println("invalid input");
 						System.exit(0);
 						break;
 					}
