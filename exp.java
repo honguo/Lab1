@@ -7,10 +7,14 @@ import java.util.*;
 
 import javax.print.attribute.standard.PrinterMessageFromOperator;
 
-// third combinatioin
-//new branch 1140310521
->>>>>>> B1
-public class exp {//
+//每次只能单独的求导或者求值
+//expression用于将输入的表达式存储为后最表达式形式，存储在栈中
+//retVar用于将上述的栈中的相应的变量换成值，simplify后缀求值
+//derivetive用于根据要求导的变量的前后变量来求导
+//比如说x+y*x*z+1就会遍历表达式，找到第一个x，然后发现x的前后什么也没有，求导后为1
+//然后找到y*x*z的x同理找到连续相乘的x的系数，即y*z，返回y*z,与求得的1相加
+//同理最后得到1+y*z
+public class exp {
 	public static void main(String[] args) {
 		System.out.print("print your expression:");
 		Scanner in=new Scanner(System.in);
@@ -36,7 +40,7 @@ public class exp {//
 	}
 	
 }
-class expression{//
+class expression{//生成后缀表达式
 	private String input;
 	public Stack<String> value=new Stack<>();
 	private Stack<String> op=new Stack<>();
@@ -47,7 +51,7 @@ class expression{//
 	public expression(String input){
 		this.input=input.substring(0);
 	}
-	public Stack<String> retExp(){//
+	public Stack<String> retExp(){///返回后缀表达式
 		String top,now;
 		int i,j=0;
 		for(i=0;i<input.length();i++){
@@ -62,7 +66,7 @@ class expression{//
 				now=input.substring(i,i+1);
 				if(!op.empty()){
 					top=op.peek();
-					while(retPriority(now)<=retPriority(top) && !op.empty()){//1-2+3
+					while(retPriority(now)<=retPriority(top) && !op.empty()){
 						value.push(op.pop());
 						if(!op.empty()) top=op.peek();
 					}	
@@ -78,7 +82,7 @@ class expression{//
 		}
 		return value;
 	}
-	public TYPE retVar(String inputVars){//
+	public TYPE retVar(String inputVars){///以字符串形式先后存储变量
 		String[] varTemp=inputVars.split(" ");
 		int i;
 		String[] temp;
@@ -122,7 +126,7 @@ class expression{//
 			return TYPE.OTHER;
 		}
 	}
-	public String derivetive(){//
+	public String derivetive(){//求导,针对顺序的表达式如[1,+,x,*,y]找到变量（而且是连乘的最后一个）将前后的相乘的拼接起来
 		int i,j,k,index,count;
 		int len,len2;
 		String temp="";
@@ -133,10 +137,10 @@ class expression{//
 			if(origin.get(i).equals(var)){
 				index=i;
 				count=1;
-				len=0;//
-				len2=0;//
+				len=0;//向前拼接的长度
+				len2=0;//向后
 				/*********/
-				for(j=i+1;j<size;j++){//
+				for(j=i+1;j<size;j++){//找到最后的变量var
 					if(origin.get(j).equals(var)){
 						index=j;
 						count++;
@@ -144,32 +148,32 @@ class expression{//
 					else if(origin.get(j).equals("+") || origin.get(j).equals("-")) break;
 				}
 				i=index;
-				for(j=i-1;j>=0;j--){//
-					if(origin.get(j).equals("+")){//
-						if(count2==0) j=j+1;
+				for(j=i-1;j>=0;j--){//找到前面的+,-
+					if(origin.get(j).equals("+")){///如果是最前面的话不包含+
+						if(count2==0) j=j+1;//只有是第一个求导的才不包含前面的+，如1+x*y
 						break;
 					}
 					else if(origin.get(j).equals("-")) break;
 				}
-				for(k=(j<0?0:j);k<i-1;k++){//
+				for(k=(j<0?0:j);k<i-1;k++){//不包含最后的op,包含前面的+,-,拼接
 					if(!origin.get(k).equals("+") && !origin.get(k).equals("-")) len++;
 					temp+=origin.get(k);
 				}
-				if(j==i-1 && i-1>=0){
+				if(j==i-1 && i-1>=0){//但是如果前面只有+，-的话，包括
 					temp+=origin.get(i-1);
 				}
 				/***********/
-				for(j=i+1;j<size;j++){//
+				for(j=i+1;j<size;j++){//后面的子串
 					if(origin.get(j).equals("+") || origin.get(j).equals("-")) break;
 				}
-				if(count>1) temp+=("*"+count);
+				if(count>1) temp+=("*"+count);//x*x*x变为x*x*3
 				for(k=i+2;k<j && k<size;k++){
 					len2++;
 				}
-				if(len2<1 && len<1) {
+				if(len2<1 && len<1) {//前后都没有系数的
 					temp+=1;
 				}
-				for(k=(len>0?i+1:i+2);k<j && k<size;k++){//
+				for(k=(len>0?i+1:i+2);k<j && k<size;k++){
 					temp+=origin.get(k);
 				}
 			count2++;
@@ -179,11 +183,11 @@ class expression{//
 		if(flag==0) return "0";
 		return temp.substring(0);
 	}
-	public String simplify(){//
+	public String simplify(){
 		 int i,j;
 		 String temp1,temp2;
 		 Stack<String> temp=new Stack<>();
-		 for(i=0;i<varLen;i++){//
+		 for(i=0;i<varLen;i++){
 			 for(j=0;j<value.size();j++){
 				 if(value.get(j).equals(vars[2*i])){
 					 value.set(j, vars[2*i+1]);
@@ -247,7 +251,7 @@ class expression{//
 		 }
 		 return temp.peek();
 	}
-	private int isLegal(char ch){//
+	private int isLegal(char ch){//0,1,2,3分别代表数字，字母，op以及非法输入
 		int temp=(int)ch;
 		if(temp>=48 && temp<=57) return 0;
 		else if((temp>=65 && temp<=90)||(temp>=97 && temp<=122)) return 1;
