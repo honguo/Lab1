@@ -7,6 +7,7 @@ import java.util.*;
 
 import javax.print.attribute.standard.PrinterMessageFromOperator;
 
+<<<<<<< HEAD
 //每次只能单独的求导或者求值
 //expression用于将输入的表达式存储为后最表达式形式，存储在栈中
 //retVar用于将上述的栈中的相应的变量换成值，simplify后缀求值
@@ -15,6 +16,12 @@ import javax.print.attribute.standard.PrinterMessageFromOperator;
 //然后找到y*x*z的x同理找到连续相乘的x的系数，即y*z，返回y*z,与求得的1相加
 //同理最后得到1+y*z
 public class exp {
+=======
+// third combinatioin
+//new branch 1140310521
+>>>>>>> B1
+public class exp {//
+>>>>>>> partner/1140310521
 	public static void main(String[] args) {
 		System.out.print("print your expression:");
 		Scanner in=new Scanner(System.in);
@@ -23,7 +30,10 @@ public class exp {
 		expression temp1=new expression(exp);
 		temp1.retExp();
 		//System.out.println(temp1.value);
+<<<<<<< HEAD
 		System.out.println(temp1.value);
+=======
+>>>>>>> partner/1140310521
 		System.out.println("input vars:");
 		String inputValue=in.nextLine();
 		TYPE type=temp1.retVar(inputValue);
@@ -39,9 +49,15 @@ public class exp {
 		long endTime=System.currentTimeMillis();
 		System.out.println("time lasts: "+(endTime-currentTime)+"ms");
 	}
+<<<<<<< HEAD
 
 }
 class expression{//生成后缀表达式
+=======
+	
+}
+class expression{//
+>>>>>>> partner/1140310521
 	private String input;
 	public Stack<String> value=new Stack<>();
 	private Stack<String> op=new Stack<>();
@@ -52,13 +68,20 @@ class expression{//生成后缀表达式
 	public expression(String input){
 		this.input=input.substring(0);
 	}
+<<<<<<< HEAD
 	public Stack<String> retExp(){///返回后缀表达式
+=======
+	public Stack<String> retExp(){//
+>>>>>>> partner/1140310521
 		String top,now;
 		int i,j=0;
 		for(i=0;i<input.length();i++){
 			if(isLegal(input.charAt(i))==3){
+<<<<<<< HEAD
                 System.out.println("input is illegal");
                 System.out.println("input is illegal");
+=======
+>>>>>>> partner/1140310521
 				System.out.println("input is illegal");
 				System.exit(0);
 			}
@@ -69,10 +92,17 @@ class expression{//生成后缀表达式
 				now=input.substring(i,i+1);
 				if(!op.empty()){
 					top=op.peek();
+<<<<<<< HEAD
 					while(retPriority(now)<=retPriority(top) && !op.empty()){
 						value.push(op.pop());
 						if(!op.empty()) top=op.peek();
 					}
+=======
+					while(retPriority(now)<=retPriority(top) && !op.empty()){//1-2+3
+						value.push(op.pop());
+						if(!op.empty()) top=op.peek();
+					}	
+>>>>>>> partner/1140310521
 				}
 				op.push(now);
 				j=i+1;
@@ -85,7 +115,11 @@ class expression{//生成后缀表达式
 		}
 		return value;
 	}
+<<<<<<< HEAD
 	public TYPE retVar(String inputVars){///以字符串形式先后存储变量
+=======
+	public TYPE retVar(String inputVars){//
+>>>>>>> partner/1140310521
 		String[] varTemp=inputVars.split(" ");
 		int i;
 		String[] temp;
@@ -101,7 +135,10 @@ class expression{//生成后缀表达式
 					}
 					else{
 						System.out.println("invalid input");
+<<<<<<< HEAD
 						System.out.println("invalid input");
+=======
+>>>>>>> partner/1140310521
 						System.exit(0);
 						break;
 					}
@@ -130,7 +167,11 @@ class expression{//生成后缀表达式
 			return TYPE.OTHER;
 		}
 	}
+<<<<<<< HEAD
 	public String derivetive(){//求导,针对顺序的表达式如[1,+,x,*,y]找到变量（而且是连乘的最后一个）将前后的相乘的拼接起来
+=======
+	public String derivetive(){//
+>>>>>>> partner/1140310521
 		int i,j,k,index,count;
 		int len,len2;
 		String temp="";
@@ -141,10 +182,17 @@ class expression{//生成后缀表达式
 			if(origin.get(i).equals(var)){
 				index=i;
 				count=1;
+<<<<<<< HEAD
 				len=0;//向前拼接的长度
 				len2=0;//向后
 				/*********/
 				for(j=i+1;j<size;j++){//找到最后的变量var
+=======
+				len=0;//
+				len2=0;//
+				/*********/
+				for(j=i+1;j<size;j++){//
+>>>>>>> partner/1140310521
 					if(origin.get(j).equals(var)){
 						index=j;
 						count++;
@@ -152,13 +200,20 @@ class expression{//生成后缀表达式
 					else if(origin.get(j).equals("+") || origin.get(j).equals("-")) break;
 				}
 				i=index;
+<<<<<<< HEAD
 				for(j=i-1;j>=0;j--){//找到前面的+,-
 					if(origin.get(j).equals("+")){///如果是最前面的话不包含+
 						if(count2==0) j=j+1;//只有是第一个求导的才不包含前面的+，如1+x*y
+=======
+				for(j=i-1;j>=0;j--){//
+					if(origin.get(j).equals("+")){//
+						if(count2==0) j=j+1;
+>>>>>>> partner/1140310521
 						break;
 					}
 					else if(origin.get(j).equals("-")) break;
 				}
+<<<<<<< HEAD
 				for(k=(j<0?0:j);k<i-1;k++){//不包含最后的op,包含前面的+,-,拼接
 					if(!origin.get(k).equals("+") && !origin.get(k).equals("-")) len++;
 					temp+=origin.get(k);
@@ -178,6 +233,27 @@ class expression{//生成后缀表达式
 					temp+=1;
 				}
 				for(k=(len>0?i+1:i+2);k<j && k<size;k++){
+=======
+				for(k=(j<0?0:j);k<i-1;k++){//
+					if(!origin.get(k).equals("+") && !origin.get(k).equals("-")) len++;
+					temp+=origin.get(k);
+				}
+				if(j==i-1 && i-1>=0){
+					temp+=origin.get(i-1);
+				}
+				/***********/
+				for(j=i+1;j<size;j++){//
+					if(origin.get(j).equals("+") || origin.get(j).equals("-")) break;
+				}
+				if(count>1) temp+=("*"+count);
+				for(k=i+2;k<j && k<size;k++){
+					len2++;
+				}
+				if(len2<1 && len<1) {
+					temp+=1;
+				}
+				for(k=(len>0?i+1:i+2);k<j && k<size;k++){//
+>>>>>>> partner/1140310521
 					temp+=origin.get(k);
 				}
 			count2++;
@@ -187,11 +263,19 @@ class expression{//生成后缀表达式
 		if(flag==0) return "0";
 		return temp.substring(0);
 	}
+<<<<<<< HEAD
 	public String simplify(){
 		 int i,j;
 		 String temp1,temp2;
 		 Stack<String> temp=new Stack<>();
 		 for(i=0;i<varLen;i++){
+=======
+	public String simplify(){//
+		 int i,j;
+		 String temp1,temp2;
+		 Stack<String> temp=new Stack<>();
+		 for(i=0;i<varLen;i++){//
+>>>>>>> partner/1140310521
 			 for(j=0;j<value.size();j++){
 				 if(value.get(j).equals(vars[2*i])){
 					 value.set(j, vars[2*i+1]);
@@ -251,11 +335,19 @@ class expression{//生成后缀表达式
 				break;
 			default:
 				temp.push(value.get(i));
+<<<<<<< HEAD
 			}
 		 }
 		 return temp.peek();
 	}
 	private int isLegal(char ch){//0,1,2,3分别代表数字，字母，op以及非法输入
+=======
+			} 
+		 }
+		 return temp.peek();
+	}
+	private int isLegal(char ch){//
+>>>>>>> partner/1140310521
 		int temp=(int)ch;
 		if(temp>=48 && temp<=57) return 0;
 		else if((temp>=65 && temp<=90)||(temp>=97 && temp<=122)) return 1;
@@ -290,4 +382,8 @@ enum TYPE{
 	SIMPLIFY,
 	DEREVETIVE,
 	OTHER
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> partner/1140310521
